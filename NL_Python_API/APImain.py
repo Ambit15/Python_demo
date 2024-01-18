@@ -1,14 +1,26 @@
 import fastapi
-import test
+from typing import Union
+from pydantic import BaseModel
 app = fastapi.FastAPI()
-@app.get("/")
-async def root():
-    return {"message":"Hello world"}
-@app.get("/item_id/{item_id}")
-async def read_item(item_id : int):
-    item_id = test.sumpi(item_id)
-    return {"message":item_id}
-@app.get("/name/{name}")
-async def givename(name : str):
-    name = "Dear my respect:" + name
-    return{"title":name}
+class Item(BaseModel):
+    name: str
+    description: Union[str, None] = None
+    price: float
+    tax: Union[float, None] = None
+@app.get("/users/{user_id}/items/{item_id}")
+async def read_user_item(
+    user_id: int, item_id: str, q: Union[str, None] = None, short: bool = False
+):
+    item = {"item_id": item_id, "owner_id": user_id}
+    if q:
+        item.update({"q": q})
+    if not short:
+        item.update(
+            {"description": "This is an amazing item that has a long description"}
+        )
+        
+    return item
+#users/10/items/25
+@app.post("/items/")
+async def create_item(item: Item):
+    return item
