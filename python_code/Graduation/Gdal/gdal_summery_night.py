@@ -2,7 +2,8 @@ from osgeo import gdal as gd
 import os
 import rasterio
 import numpy as np
-
+import xlwt
+import gdal_clip as gc
 '''
 # 打开栅格文件
 with rasterio.open('path_to_your_raster.tif') as raster:
@@ -23,11 +24,23 @@ print(f"最小值: {min_value}")
 print(f"平均值: {mean_value}")
 
 '''
+#excle存放路径和名称
+excel_save_dir = r"G:\graduation_database\calcuate\city\night_mean.xls"
+#create workspace
+workbook = xlwt.Workbook(encoding="utf-8")
+#create sheet
+sheet = workbook.add_sheet("xian",cell_overwrite_ok=True)
+head = ["年度","均值"]
+years = []
+data = []
+
 
 #遍历文件
 folder = "G:\\\\graduation_database\\\\N_clip"
 
+#循环获取数据
 for filename in os.listdir(folder):
+    year = gc.keep_digits(filename)
     filedir = folder + "\\\\" + filename
     with rasterio.open(filedir) as raster:
     # 读取栅格数据
@@ -35,5 +48,18 @@ for filename in os.listdir(folder):
     band_index = 0  # 根据实际情况修改
     band_data = raster_data[band_index]
     mean_value = np.mean(band_data)
-    print(f"平均值: {mean_value}")
+    data.append(mean_value)
+    years.append(year)
 
+#循环写入数据
+for i in head:
+    sheet.write(0,head.index(i),i)
+
+for i in years:
+    sheet.write(years.index(i)+1,0,i)
+
+for i in data:
+    sheet.write(data.index(i)+1,1,i)
+
+#保存
+workbook.save(excel_save_dir)
