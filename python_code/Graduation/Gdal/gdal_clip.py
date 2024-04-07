@@ -1,7 +1,4 @@
 from osgeo import gdal as gd
-import os
-import pandas
-import seaborn
 import re
  
 
@@ -40,8 +37,9 @@ def clip_rester(rester_file,clip_boundry,save_file):
 #测试调用
 
 #os 下的遍历文件
-night_folder = "G:\\\\graduation_database\\\\Night"
 
-for filename in os.listdir(night_folder):
-    rester_dir = night_folder + "\\\\" + filename
-    clip_rester(rester_dir,r"G:\graduation_database\boundry\city\xian.shp","G:\\graduation_database\\N_clip")
+#night_folder = "G:\\\\graduation_database\\\\Night"
+
+#for filename in os.listdir(night_folder):
+#    rester_dir = night_folder + "\\\\" + filename
+#    clip_rester(rester_dir,r"G:\graduation_database\boundry\city\xian.shp","G:\\graduation_database\\N_clip")

@@ -1,7 +1,5 @@
 import os
 
-folder = "G:\\\\graduation_database\\\\Night"
+excel_save_dir = "G:\\\\graduation_database\\\\Analysis_temp\\\\xls\\\\" + "baoji" + ".xls"
 
-for filename in os.listdir(folder):
-    a = folder + "\\\\" + filename
-    print(a)
+print(excel_save_dir)

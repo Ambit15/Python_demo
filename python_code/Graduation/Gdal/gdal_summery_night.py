@@ -1,4 +1,3 @@
-from osgeo import gdal as gd
 import os
 import rasterio
 import numpy as np
@@ -24,44 +23,46 @@ print(f"最小值: {min_value}")
 print(f"平均值: {mean_value}")
 
 '''
-#excle存放路径和名称
-excel_save_dir = r"G:\graduation_database\calcuate\city\night_mean.xls"
-#create workspace
-workbook = xlwt.Workbook(encoding="utf-8")
-#create sheet
-sheet = workbook.add_sheet("xian",cell_overwrite_ok=True)
-head = ["年度","均值"]
-years = []
-data = []
 
 
 #遍历文件
-folder = "G:\\\\graduation_database\\\\N_clip"
 
-#循环获取数据
-for filename in os.listdir(folder):
-    year = gc.keep_digits(filename)
-    filedir = folder + "\\\\" + filename
-    with rasterio.open(filedir) as raster:
-    # 读取栅格数据
-        raster_data = raster.read()
-    band_index = 0  # 根据实际情况修改
-    band_data = raster_data[band_index]
-    mean_value = np.mean(band_data)
-    data.append(mean_value)
-    years.append(year)
+def summery_mean(folder,xlsname):
 
-#循环写入数据
-for i in head:
-    sheet.write(0,head.index(i),i)
+    #excle存放路径和名称
+    excel_save_dir = "G:\\\\graduation_database\\\\Analysis_temp\\\\xls\\\\" + xlsname + ".xls"
+    #create workspace
+    workbook = xlwt.Workbook(encoding="utf-8")
+    #create sheet
+    sheet = workbook.add_sheet(xlsname,cell_overwrite_ok=True)
+    head = ["年度","均值"]
+    years = []
+    data = []
 
-for i in years:
-    sheet.write(years.index(i)+1,0,i)
+    #循环获取数据
+    for filename in os.listdir(folder):
+        year = gc.keep_digits(filename)
+        filedir = folder + "\\\\" + filename
+        with rasterio.open(filedir) as raster:
+        # 读取栅格数据
+            raster_data = raster.read()
+        band_index = 0  # 根据实际情况修改
+        band_data = raster_data[band_index]
+        mean_value = np.mean(band_data)
+        data.append(mean_value)
+        years.append(year)
 
-for i in data:
-    sheet.write(data.index(i)+1,1,i)
+    #循环写入数据
+    for i in head:
+        sheet.write(0,head.index(i),i)
 
-#保存
-workbook.save(excel_save_dir)
+    for i in years:
+        sheet.write(years.index(i)+1,0,i)
+
+    for i in data:
+        sheet.write(data.index(i)+1,1,i)
+
+    #保存
+    workbook.save(excel_save_dir)
 
 #集成化
