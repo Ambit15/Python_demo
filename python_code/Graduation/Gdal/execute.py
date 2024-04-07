@@ -17,7 +17,7 @@ temp_night_folder = r"G:\graduation_database\Analysis_temp\night"
 city = []
 temp_shp_folder = "G:\\\\graduation_database\\\\Analysis_temp\\\\shp"
 temp_shp_dir = temp_shp_folder + "\\\\" + city_name + ".shp"
-base_shp_dir = r"G:\graduation_database\boundrye\base\陕西省.shp"
+base_shp_dir = r"G:\graduation_database\boundry\base\陕西省.shp"
 night_folder = "G:\\\\graduation_database\\\\Night"
 city.append(city_name)
 
