@@ -27,17 +27,17 @@ print(f"平均值: {mean_value}")
 
 #遍历文件
 
-def summery_mean(folder,xlsname):
+def summery_mean(folder,xlsname,save_dir):
 
-    #excle存放路径和名称
-    excel_save_dir = "G:\\\\graduation_database\\\\Analysis_temp\\\\xls\\\\" + xlsname + ".xls"
+    #excle存放路径和名称 save_dir
     #create workspace
     workbook = xlwt.Workbook(encoding="utf-8")
     #create sheet
     sheet = workbook.add_sheet(xlsname,cell_overwrite_ok=True)
-    head = ["年度","均值"]
+    head = ["年度","值"]
     years = []
-    data = []
+    mean_data = []
+    sum_data = []
 
     #循环获取数据
     for filename in os.listdir(folder):
@@ -48,8 +48,10 @@ def summery_mean(folder,xlsname):
             raster_data = raster.read()
         band_index = 0  # 根据实际情况修改
         band_data = raster_data[band_index]
-        mean_value = np.mean(band_data)
-        data.append(mean_value)
+        #mean_value = np.mean(band_data)
+        sum_value = np.sum(band_data)
+        #mean_data.append(mean_value)
+        sum_data.append(sum_value)
         years.append(year)
 
     #循环写入数据
@@ -59,10 +61,10 @@ def summery_mean(folder,xlsname):
     for i in years:
         sheet.write(years.index(i)+1,0,i)
 
-    for i in data:
-        sheet.write(data.index(i)+1,1,i)
+    for i in sum_data:
+        sheet.write(sum_data.index(i)+1,1,int(i))
 
     #保存
-    workbook.save(excel_save_dir)
+    workbook.save(save_dir)
 
 #集成化
