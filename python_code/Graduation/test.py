@@ -22,3 +22,6 @@ arr = np.array([1, 2, 2, 3, 1, 1, 3, 4, 4, 4])
 counts = np.bincount(arr)
  
 print(counts)
+
+for i in range(5):
+    print(i)
