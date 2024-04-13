@@ -25,3 +25,7 @@ print(counts)
 
 for i in range(5):
     print(i)
+
+xls_dir = r"G:\graduation_database\calcuate\model\result_clcd\安康市.xls"
+city_name = xls_dir[-7:-4]
+print(city_name)
