@@ -68,3 +68,21 @@ for filename in os.listdir(sum_folder):
 
 """
 
+"""
+numpy运算
+import numpy as np
+ 
+A = np.array([[1, 2, 3], [4, 5, 6]])
+B = np.array([[7, 8, 9], [10, 11, 12]])
+
+list1 = []
+list1.append(A)
+list1.append(B)
+
+C = sum(list1) / 2
+print(C)
+
+"""
+
+a = [1,2]
+print(a[0:1])
