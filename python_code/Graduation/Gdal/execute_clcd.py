@@ -50,7 +50,7 @@ def execute_mean_raster(name):
     night_folder = "G:\\\\graduation_database\\\\Night"
     base_shp_dir = r"G:\graduation_database\boundry\base\陕西省.shp"
     #下一步时间
-
+    raster_dir = r"G:\graduation_database\calcuate\night_mean" + "\\\\" + name + ".tif"
     temp_folder = r"G:\graduation_database\Analysis_temp"
     temp_night_folder = r"G:\graduation_database\Analysis_temp\night"
 
@@ -71,11 +71,12 @@ def execute_mean_raster(name):
         rester_dir = night_folder + "\\\\" + filename
         gdal_clip.clip_rester(rester_dir,temp_shp_dir,temp_night_folder)
     #execute and make map
-
+    gsn.calculate_mean(temp_night_folder,raster_dir)
 
 #range to clip and summary
 for i in city_list:
     #range_clcd_city(i)
+    execute_mean_raster(i)
     print(i)
 
 #caculate execute time
