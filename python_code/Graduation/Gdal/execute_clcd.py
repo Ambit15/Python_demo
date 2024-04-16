@@ -3,6 +3,7 @@ import time
 import gdal_clip
 import gdal_select as gs
 import gdal_summery_clcd as gsc
+import gdal_summery_night as gsn
 from osgeo import ogr
 
 start_time = time.time()
@@ -40,9 +41,42 @@ def range_clcd_city(name):
     #summery
     gsc.summery_clcd(temp_clcd_folder,name,xls_dir)
 
+
+def execute_mean_raster(name):
+     #可选参数 #####
+    city_name = name
+    #"西安市" "咸阳市"  "宝鸡市"  "渭南市"  "商洛市"  "汉中市"  "安康市"  "榆林市"  "延安市"  "铜川市"
+    clcd_folder = "G:\\\\graduation_database\\\\CLCD"
+    night_folder = "G:\\\\graduation_database\\\\Night"
+    base_shp_dir = r"G:\graduation_database\boundry\base\陕西省.shp"
+    #下一步时间
+
+    temp_folder = r"G:\graduation_database\Analysis_temp"
+    temp_night_folder = r"G:\graduation_database\Analysis_temp\night"
+
+    city = []
+    temp_shp_folder = "G:\\\\graduation_database\\\\Analysis_temp\\\\shp"
+    temp_shp_dir = temp_shp_folder + "\\\\" + city_name + ".shp"
+
+    city.append(city_name)
+
+    #clear and rebuild folderee
+    gs.clear_folder(temp_folder)
+    gs.cerate_folder(temp_shp_folder)
+    gs.cerate_folder(temp_night_folder)
+    #select boundry
+    gs.SelectByAttribute(base_shp_dir,"name",ogr.OFTString,city,"WGS84",temp_shp_dir)
+    #clip raster
+    for filename in os.listdir(night_folder):
+        rester_dir = night_folder + "\\\\" + filename
+        gdal_clip.clip_rester(rester_dir,temp_shp_dir,temp_night_folder)
+    #execute and make map
+
+
 #range to clip and summary
 for i in city_list:
-    range_clcd_city(i)
+    #range_clcd_city(i)
+    print(i)
 
 #caculate execute time
 end_time = time.time()

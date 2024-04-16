@@ -68,3 +68,34 @@ def summery_mean(folder,xlsname,save_dir):
     workbook.save(save_dir)
 
 #集成化
+
+def calculate_mean(raster_folder,result_dir):
+    """
+    raster_folder
+    result_dir with .tif
+    """
+    #计数
+    len_number = 0
+    list_raster_array = []
+    #循环导入栅格数据
+    for filename in os.listdir(raster_folder):
+        raster_dir = raster_folder + "\\\\" + filename
+        #计数加一
+        len_number += 1
+        with rasterio.open(raster_dir) as raster:
+            data = raster.read()
+            data = data.astype(np.int64)
+            #获取栅格元数据
+            profile = raster.profile
+            profile.update(count=raster.count)
+            profile.update(dtype='int16')
+        list_raster_array.append(data)
+    #print(type(data))
+    result_array = sum(list_raster_array)
+
+    result_array = result_array // len_number
+
+    #写入栅格
+
+    with rasterio.open(result_dir,"w",**profile) as result_raster:
+        result_raster.write(result_array)
