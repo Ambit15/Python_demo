@@ -17,16 +17,20 @@ def calculate_mean(raster_folder,result_dir):
         len_number += 1
         with rasterio.open(raster_dir) as raster:
             data = raster.read()
+            data = data.astype(np.int64)
+            #获取栅格元数据
             profile = raster.profile
             profile.update(count=raster.count)
+            profile.update(dtype='int16')
         list_raster_array.append(data)
-
+    #print(type(data))
     result_array = sum(list_raster_array)
-    result_array = result_array / len_number
+
+    result_array = result_array // len_number
 
     #写入栅格
 
     with rasterio.open(result_dir,"w",**profile) as result_raster:
         result_raster.write(result_array)
 
-calculate_mean(r"G:\graduation_database\Analysis_temp\night",r"G:\graduation_database\Analysis_temp\tongchuan.tif")
+#calculate_mean(r"G:\graduation_database\Analysis_temp\night",r"G:\graduation_database\Analysis_temp\tongchuan.tif")
