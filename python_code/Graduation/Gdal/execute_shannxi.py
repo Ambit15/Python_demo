@@ -74,10 +74,13 @@ def execute_mean_raster(name):
     gsn.calculate_mean(temp_night_folder,raster_dir)
 
 #range to clip and summary
+"""
 for i in city_list:
     #range_clcd_city(i)
     execute_mean_raster(i)
     print(i)
+"""
+range_clcd_city("西安市")
 
 #caculate execute time
 end_time = time.time()

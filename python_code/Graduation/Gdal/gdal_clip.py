@@ -31,7 +31,7 @@ def clip_rester(rester_file,clip_boundry,save_file):
     #vector_ds = ogr.Open("xian.shp")
 
     # 指定裁剪操作的参数
-    options = gd.WarpOptions(cutlineDSName=clip_boundry,cropToCutline=True,dstNodata= -1)  # 可以根据需要修改 nodata 值 -1 night 
+    options = gd.WarpOptions(cutlineDSName=clip_boundry,cropToCutline=True,dstNodata= 0)  # 可以根据需要修改 nodata 值 -1 night 
 
     # 执行裁剪操作，并将结果保存到目标文件中
     gd.Warp(save_name, src_ds, options=options)

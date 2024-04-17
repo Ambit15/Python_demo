@@ -73,3 +73,6 @@ with rasterio.open(r"G:\graduation_database\Analysis_temp\temp_clcd\011990_clip.
         count = np.sum(band_data == i)
     print(sum_list)
 """
+
+def year_clcd():
+    return 1
